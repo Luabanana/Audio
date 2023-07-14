@@ -51,6 +51,7 @@
             color: #ffffff;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/fireworks.js"></script>
 </head>
 <body>
     <div class="container">
@@ -69,17 +70,25 @@
         </div>
         <div id="download-section">
             <p>Het video bestand is geconverteerd naar audio.</p>
-            <a id="download-link" class="download-link" href="#" download>Download het audio bestand</a>
+            <div id="download-links">
+                <a id="download-pc" class="download-link" href="#" download>Download het audio bestand (PC)</a><br>
+                <a id="download-iphone" class="download-link" href="#" download>Download het audio bestand (iPhone)</a><br>
+                <a id="download-android" class="download-link" href="#" download>Download het audio bestand (Android)</a>
+            </div>
         </div>
     </div>
 
     <script>
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
         document.getElementById('upload-form').addEventListener('submit', function(event) {
             event.preventDefault();
             
             var form = this;
             var progressBar = document.querySelector('.progress-bar');
-            var downloadLink = document.getElementById('download-link');
+            var downloadLinks = document.getElementById('download-links');
             var uploadSection = document.getElementById('upload-section');
             var downloadSection = document.getElementById('download-section');
             
@@ -98,9 +107,24 @@
                 uploadSection.style.display = 'none';
                 downloadSection.style.display = 'block';
                 var audioFilePath = this.responseText;
-                downloadLink.href = audioFilePath;
-                downloadLink.style.display = 'inline';
-                downloadLink.setAttribute('download', 'audio.mp3');
+                
+                var downloadPC = document.getElementById('download-pc');
+                downloadPC.href = audioFilePath;
+                downloadPC.style.display = 'inline';
+                
+                var downloadiPhone = document.getElementById('download-iphone');
+                downloadiPhone.href = audioFilePath;
+                downloadiPhone.style.display = isMobileDevice() ? 'none' : 'inline';
+                
+                var downloadAndroid = document.getElementById('download-android');
+                downloadAndroid.href = audioFilePath;
+                downloadAndroid.style.display = isMobileDevice() ? 'inline' : 'none';
+                
+                // Vuurwerk afspelen
+                fireworks.start();
+                setTimeout(function() {
+                    fireworks.stop();
+                }, 10000); // Vuurwerk stopt na 10 seconden
             };
             
             xhr.onerror = function() {
