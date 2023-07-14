@@ -51,7 +51,6 @@
             color: #ffffff;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/fireworks.js"></script>
 </head>
 <body>
     <div class="container">
@@ -111,20 +110,17 @@
                 var downloadPC = document.getElementById('download-pc');
                 downloadPC.href = audioFilePath;
                 downloadPC.style.display = 'inline';
+                downloadPC.setAttribute('download', 'audio.mp3');
                 
                 var downloadiPhone = document.getElementById('download-iphone');
                 downloadiPhone.href = audioFilePath;
                 downloadiPhone.style.display = isMobileDevice() ? 'none' : 'inline';
+                downloadiPhone.setAttribute('download', 'audio.m4a');
                 
                 var downloadAndroid = document.getElementById('download-android');
                 downloadAndroid.href = audioFilePath;
                 downloadAndroid.style.display = isMobileDevice() ? 'inline' : 'none';
-                
-                // Vuurwerk afspelen
-                fireworks.start();
-                setTimeout(function() {
-                    fireworks.stop();
-                }, 10000); // Vuurwerk stopt na 10 seconden
+                downloadAndroid.setAttribute('download', 'audio.mp3');
             };
             
             xhr.onerror = function() {
