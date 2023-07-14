@@ -97,8 +97,10 @@
                 progressBar.style.width = '100%';
                 uploadSection.style.display = 'none';
                 downloadSection.style.display = 'block';
-                downloadLink.href = this.responseText;
+                var audioFilePath = this.responseText;
+                downloadLink.href = audioFilePath;
                 downloadLink.style.display = 'inline';
+                downloadLink.setAttribute('download', 'audio.mp3');
             };
             
             xhr.onerror = function() {
